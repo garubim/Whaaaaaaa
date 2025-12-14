@@ -1,3 +1,4 @@
+Deprecated 
 #!/bin/bash
 
 # Script para converter GIF para WebM
