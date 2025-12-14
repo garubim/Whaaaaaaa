@@ -1,9 +1,15 @@
-# Compatibilidade de Contrato - Whaaaaa! NFT Mint
+# Doc Interno Deprecated
+
+ 
+ 
+ 
+ 
+ Compatibilidade de Contrato - Whaaaaa! NFT Mint
 
 ## Contrato Atual
-- **Endereço**: `0xa587c8a61418d3099e1f167c631ce37891474c67`
-- **Tipo**: ERC-1155 (Zora deployed na Base)
-- **Token ID**: 46
+- **Endereço**: `0x86a34dFaB59996C6fB809D1F2B016a0eD397E682`
+- **Tipo**: ERC-721 (written under OpenZeppelin model, verified on Basescan)
+- **Next Token ID**: 01
 
 ## Possíveis Cenários de Incompatibilidade
 
