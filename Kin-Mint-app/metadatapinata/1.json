@@ -1,0 +1,15 @@
+{
+  "name": "Mfer 1",
+  "description": "Whaaaaa! - Exclusive NFT Collection on Base",
+  "image": "ipfs://bafybeiaevaflz35fjr4qhrrcaejbxqiie5v3itvgqmabtstwbpfe7vlodq",
+  "attributes": [
+    {
+      "trait_type": "Collection",
+      "value": "Mfer-bk-0'-base"
+    },
+    {
+      "trait_type": "Chain",
+      "value": "Base"
+    }
+  ]
+}

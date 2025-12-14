@@ -1,0 +1,133 @@
+Last login: Sun Dec 14 08:19:28 on console
+gabrielrubim@MacBook-Air-de-Gabriel Kin-Mint-app % npm run dev
+
+> nft-mint-app@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.3.4
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.51:3000
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 5s
+ ○ Compiling / ...
+ ⚠ ./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+Module not found: Can't resolve '@react-native-async-storage/async-storage' in '/Users/gabrielrubim/dev/GitHub/Whaaaaa-Is-back/Kin-Mint-app/node_modules/@metamask/sdk/dist/browser/es'
+
+Import trace for requested module:
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+./node_modules/@wagmi/connectors/dist/esm/metaMask.js
+./node_modules/@wagmi/connectors/dist/esm/exports/index.js
+./node_modules/wagmi/dist/esm/exports/connectors.js
+./node_modules/@coinbase/onchainkit/dist/connected/components/Connected.js
+./node_modules/@coinbase/onchainkit/dist/index.js
+./app/rootProvider.tsx
+
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+Module not found: Can't resolve '@react-native-async-storage/async-storage' in '/Users/gabrielrubim/dev/GitHub/Whaaaaa-Is-back/Kin-Mint-app/node_modules/@metamask/sdk/dist/browser/es'
+
+Import trace for requested module:
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+./node_modules/@wagmi/connectors/dist/esm/metaMask.js
+./node_modules/@wagmi/connectors/dist/esm/exports/index.js
+./node_modules/wagmi/dist/esm/exports/connectors.js
+./node_modules/@coinbase/onchainkit/dist/wallet/components/WalletModal.js
+./node_modules/@coinbase/onchainkit/dist/wallet/index.js
+./app/page.tsx
+ GET / 200 in 103779ms
+ ⚠ ./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+Module not found: Can't resolve '@react-native-async-storage/async-storage' in '/Users/gabrielrubim/dev/GitHub/Whaaaaa-Is-back/Kin-Mint-app/node_modules/@metamask/sdk/dist/browser/es'
+
+Import trace for requested module:
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+./node_modules/@wagmi/connectors/dist/esm/metaMask.js
+./node_modules/@wagmi/connectors/dist/esm/exports/index.js
+./node_modules/wagmi/dist/esm/exports/connectors.js
+./node_modules/@coinbase/onchainkit/dist/connected/components/Connected.js
+./node_modules/@coinbase/onchainkit/dist/index.js
+./app/rootProvider.tsx
+
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+Module not found: Can't resolve '@react-native-async-storage/async-storage' in '/Users/gabrielrubim/dev/GitHub/Whaaaaa-Is-back/Kin-Mint-app/node_modules/@metamask/sdk/dist/browser/es'
+
+Import trace for requested module:
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+./node_modules/@wagmi/connectors/dist/esm/metaMask.js
+./node_modules/@wagmi/connectors/dist/esm/exports/index.js
+./node_modules/wagmi/dist/esm/exports/connectors.js
+./node_modules/@coinbase/onchainkit/dist/wallet/components/WalletModal.js
+./node_modules/@coinbase/onchainkit/dist/wallet/index.js
+./app/page.tsx
+ ⚠ ./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+Module not found: Can't resolve '@react-native-async-storage/async-storage' in '/Users/gabrielrubim/dev/GitHub/Whaaaaa-Is-back/Kin-Mint-app/node_modules/@metamask/sdk/dist/browser/es'
+
+Import trace for requested module:
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+./node_modules/@wagmi/connectors/dist/esm/metaMask.js
+./node_modules/@wagmi/connectors/dist/esm/exports/index.js
+./node_modules/wagmi/dist/esm/exports/connectors.js
+./node_modules/@coinbase/onchainkit/dist/connected/components/Connected.js
+./node_modules/@coinbase/onchainkit/dist/index.js
+./app/rootProvider.tsx
+
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+Module not found: Can't resolve '@react-native-async-storage/async-storage' in '/Users/gabrielrubim/dev/GitHub/Whaaaaa-Is-back/Kin-Mint-app/node_modules/@metamask/sdk/dist/browser/es'
+
+Import trace for requested module:
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+./node_modules/@wagmi/connectors/dist/esm/metaMask.js
+./node_modules/@wagmi/connectors/dist/esm/exports/index.js
+./node_modules/wagmi/dist/esm/exports/connectors.js
+./node_modules/@coinbase/onchainkit/dist/connected/components/Connected.js
+./node_modules/@coinbase/onchainkit/dist/index.js
+./app/rootProvider.tsx
+ ⚠ ./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+Module not found: Can't resolve '@react-native-async-storage/async-storage' in '/Users/gabrielrubim/dev/GitHub/Whaaaaa-Is-back/Kin-Mint-app/node_modules/@metamask/sdk/dist/browser/es'
+
+Import trace for requested module:
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+./node_modules/@wagmi/connectors/dist/esm/metaMask.js
+./node_modules/@wagmi/connectors/dist/esm/exports/index.js
+./node_modules/wagmi/dist/esm/exports/connectors.js
+./node_modules/@coinbase/onchainkit/dist/connected/components/Connected.js
+./node_modules/@coinbase/onchainkit/dist/index.js
+./app/rootProvider.tsx
+
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+Module not found: Can't resolve '@react-native-async-storage/async-storage' in '/Users/gabrielrubim/dev/GitHub/Whaaaaa-Is-back/Kin-Mint-app/node_modules/@metamask/sdk/dist/browser/es'
+
+Import trace for requested module:
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+./node_modules/@wagmi/connectors/dist/esm/metaMask.js
+./node_modules/@wagmi/connectors/dist/esm/exports/index.js
+./node_modules/wagmi/dist/esm/exports/connectors.js
+./node_modules/@coinbase/onchainkit/dist/connected/components/Connected.js
+./node_modules/@coinbase/onchainkit/dist/index.js
+./app/rootProvider.tsx
+ ⚠ ./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+Module not found: Can't resolve '@react-native-async-storage/async-storage' in '/Users/gabrielrubim/dev/GitHub/Whaaaaa-Is-back/Kin-Mint-app/node_modules/@metamask/sdk/dist/browser/es'
+
+Import trace for requested module:
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+./node_modules/@wagmi/connectors/dist/esm/metaMask.js
+./node_modules/@wagmi/connectors/dist/esm/exports/index.js
+./node_modules/wagmi/dist/esm/exports/connectors.js
+./node_modules/@coinbase/onchainkit/dist/connected/components/Connected.js
+./node_modules/@coinbase/onchainkit/dist/index.js
+./app/rootProvider.tsx
+
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+Module not found: Can't resolve '@react-native-async-storage/async-storage' in '/Users/gabrielrubim/dev/GitHub/Whaaaaa-Is-back/Kin-Mint-app/node_modules/@metamask/sdk/dist/browser/es'
+
+Import trace for requested module:
+./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
+./node_modules/@wagmi/connectors/dist/esm/metaMask.js
+./node_modules/@wagmi/connectors/dist/esm/exports/index.js
+./node_modules/wagmi/dist/esm/exports/connectors.js
+./node_modules/@coinbase/onchainkit/dist/connected/components/Connected.js
+./node_modules/@coinbase/onchainkit/dist/index.js
+./app/rootProvider.tsx
+ GET /favicon.ico 200 in 51734ms
+ HEAD / 200 in 48697ms
+
