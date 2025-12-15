@@ -53,11 +53,13 @@ O deploy pode ser feito facilmente no Netlify, Vercel ou qualquer serviço que s
 
 ## 📸 Preview
 
-> Adicione aqui um print ou GIF do app rodando (opcional)
+> ) [Mfer-back-0'-base- 1080p Apple ProRes 422 HQ.webm](https://github.com/user-attachments/assets/d9c08fa4-6db8-4ed9-9587-19cb684b8bac)
+
+
 
 ## 📄 Licença
 MIT
 
 ---
 
-Desenvolvido por Gabriel Rubim — Powered by OnchainKit
+Developed by Kin Wiz — Powered by OnchainKit
