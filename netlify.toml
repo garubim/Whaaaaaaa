@@ -1,5 +1,4 @@
 [build]
-base = "e2e-report/"
 command = "next build"
 publish = ".next"
 
