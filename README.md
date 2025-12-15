@@ -1,19 +1,19 @@
 
 # Whaaaaa! NFT Mint App
 
-Mint NFTs exclusivos na Base Network com uma experiência rápida, segura e integrada ao OnchainKit.
+Mint exclusive NFTs on the Base Network with a fast, secure, and integrated OnchainKit experience.
 
-## ✨ Sobre o Projeto
+## ✨ About the Project
 
-Este é um mini-app de mint NFT desenvolvido em Next.js, utilizando OnchainKit, wagmi e viem para integração com carteiras e contratos inteligentes. O objetivo é proporcionar uma experiência simples e direta para mintar NFTs da coleção "Mfer-0-base".
+This is a mini-app for minting NFTs developed in Next.js, using OnchainKit, wagmi, and viem for integration with wallets and smart contracts. The goal is to provide a simple and straightforward experience for minting NFTs from the "Mfer-0-base" collection.
 
 - Mint 100% onchain
-- Integração com carteiras Ethereum
-- Interface responsiva e otimizada para Farcaster Frames
+- Integration with Ethereum L1 and L2 wallets and Smart Wallets
+- Responsive interface optimized for Farcaster Frames.
 
-## 🚀 Rodando Localmente
+## 🚀 Running Locally
 
-1. Instale as dependências:
+1. Install the dependencies:
 
 ```bash
 npm install
@@ -23,33 +23,33 @@ npm install
 pnpm install
 ```
 
-2. Rode o servidor de desenvolvimento:
+2. Run the development server:
 
 ```bash
 npm run dev
 ```
 
-3. Acesse [http://localhost:3000](http://localhost:3000) no navegador.
+3. Access [http://localhost:3000](http://localhost:3000) on browser.
 
-## 🛠️ Tecnologias
+## 🛠️ Technologies
 - Next.js 15+
 - React 19
-- OnchainKit (by Coinbase)
+- OnchainKit (by 🟦 base)
 - wagmi
 - viem
 
 ## 🌐 Deploy
 
-O deploy pode ser feito facilmente no Netlify, Vercel ou qualquer serviço que suporte Next.js.
+Deployment can be easily done on Netlify, Vercel, or any service that supports Next.js.
 
 - **Build command:** `npm run build`
 - **Publish directory:** `.next`
 
-## 📁 Estrutura Essencial
-- `app/` — Páginas e layout principal
-- `components/` — Componentes React reutilizáveis
-- `public/` — Assets estáticos
-- `package.json`, `tsconfig.json`, `next.config.js` — Configurações do projeto
+## 📁 Essential Structure
+- `app/` —Pages and main layout
+- `components/` — Reusable React Components
+- `public/` — Static Assets
+- `package.json`, `tsconfig.json`, `next.config.js` — Project settings
 
 ## 📸 Preview
 
@@ -57,8 +57,8 @@ O deploy pode ser feito facilmente no Netlify, Vercel ou qualquer serviço que s
 
 
 
-## 📄 Licença
-MIT
+## 📄 Licence
+SPDX-License-Identifier: MIT
 
 ---
 
