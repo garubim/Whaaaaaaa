@@ -1,0 +1,13 @@
+
+# Ignore node_modules and build output
+node_modules
+.next
+out
+dist
+
+# Ignore old docs/scripts
+Kin-Mint-app/CONTRACT_COMPATIBILITY.md
+Kin-Mint-app/CONVERTER_IMAGEM.sh
+Kin-Mint-app/DEPLOY_GUIDE.md
+Kin-Mint-app/CONTRACT_COMPATIBILITY.md
+ANALISE_PROFUNDA_ESTRUTURA.md

@@ -1,0 +1,104 @@
+/* Codepoesia Overlay */
+.codepoesiaOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 20, 60, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.5s;
+}
+
+.codepoesiaBox {
+  background: #18122b;
+  color: #f3e9ff;
+  border-radius: 16px;
+  padding: 2rem 2.5rem;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.18);
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+.main {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  text-align: center;
+  color: white;
+  margin-bottom: 3rem;
+}
+
+.header h1 {
+  font-size: 3rem;
+  margin: 0 0 1rem 0;
+  font-weight: bold;
+}
+
+.header p {
+  font-size: 1.2rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.footer {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.footer a:hover {
+  opacity: 1;
+}
+
+.promo {
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  color: #fff;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+  font-size: 1.1rem;
+  text-align: center;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+}
+
+@media (max-width: 768px) {
+  .promo {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 1rem;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .header p {
+    font-size: 1rem;
+  }
+}
