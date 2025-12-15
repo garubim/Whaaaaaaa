@@ -68,23 +68,29 @@ export default function MintComponent() {
   return (
     <div style={styles.container}>
       <div style={styles.verticalContent}>
+
+
         <div style={styles.imageSection}>
           <NFTImageDisplay metadata={nftMetadata} />
         </div>
 
         {/* Botão Mint destacado, logo abaixo da imagem */}
-        <div style={{ width: '100%', margin: '1.5rem 0 0.5rem 0', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ width: '100%', margin: '1.2rem 0 1.2rem 0', display: 'flex', justifyContent: 'center' }}>
           <button
             onClick={handleMint}
             disabled={!isConnected || isMinting || isConfirming}
             style={{
               ...styles.button,
-              fontSize: '1.15rem',
-              padding: '0.85rem 0',
-              borderRadius: '12px',
+              fontSize: '1.2rem',
+              padding: '0.9rem 0',
+              borderRadius: '14px',
               margin: '0 auto',
               maxWidth: '100%',
-              width: '90%',
+              width: '95%',
+              background: 'linear-gradient(90deg, #00c6fb 0%, #005bea 100%)',
+              color: '#fff',
+              boxShadow: '0 0 16px 0 #00c6fb80',
+              letterSpacing: '0.04em',
               ...((!isConnected || isMinting || isConfirming) ? styles.buttonDisabled : {}),
             }}
           >
@@ -94,45 +100,41 @@ export default function MintComponent() {
           </button>
         </div>
 
-        {/* Título e descrição logo abaixo do Mint */}
-        <div style={{ width: '100%', textAlign: 'center', marginBottom: '1rem' }}>
-          <h2 style={{ fontSize: '2rem', margin: 0, color: '#fff' }}>{nftMetadata.name}</h2>
-          <p style={{ fontSize: '1.1rem', margin: '0.5rem 0 1.5rem 0', color: '#fff', opacity: 0.9 }}>{nftMetadata.description}</p>
-        </div>
-
         {/* Mensagens de erro/sucesso */}
         {error && <p style={styles.warning}>⚠️ {error}</p>}
         {successMessage && <p style={styles.success}>✅ {successMessage}</p>}
 
-        {/* Detalhes integrados: Collection, Chain, Address, Price, Wallet */}
-        <div style={styles.contractInfo}>
+        {/* Detalhes integrados: Collection, Chain, Address, Price, Wallet, The soul spins at */}
+        <div style={{ ...styles.contractInfo, marginTop: '0.5rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Collection</span>
-            <span style={{ color: '#00ffff', fontWeight: 500 }}>Mfer-bk-0-base</span>
+            <span style={{ color: '#00e6ff', fontWeight: 600, textShadow: '0 0 4px #000' }}>Mfer-bk-0-base</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Chain</span>
-            <span style={{ color: '#00ffff', fontWeight: 500 }}>Base</span>
+            <span style={{ color: '#00e6ff', fontWeight: 600, textShadow: '0 0 4px #000' }}>Base</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Address</span>
-            <code style={{ ...styles.addressCode, background: 'none', padding: 0, color: '#fff' }}>{CONTRACT_ADDRESS.slice(0, 8)}...{CONTRACT_ADDRESS.slice(-6)}</code>
+            <code style={{ ...styles.addressCode, background: 'none', padding: 0, color: '#fff', textShadow: '0 0 4px #000' }}>{CONTRACT_ADDRESS.slice(0, 8)}...{CONTRACT_ADDRESS.slice(-6)}</code>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Price</span>
-            <span style={styles.price}>{MINT_PRICE} ETH</span>
+            <span style={{ ...styles.price, color: '#fff', textShadow: '0 0 6px #00e6ff, 0 0 2px #000' }}>{MINT_PRICE} ETH</span>
           </div>
           {isConnected && (
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
               <span style={{ fontWeight: 600 }}>Wallet</span>
-              <code style={{ ...styles.addressCode, background: 'none', padding: 0, color: '#fff' }}>{address?.slice(0, 10)}...</code>
+              <code style={{ ...styles.addressCode, background: 'none', padding: 0, color: '#fff', textShadow: '0 0 4px #000' }}>{address?.slice(0, 10)}...</code>
             </div>
           )}
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 0 }}>
             <span style={{ fontWeight: 600 }}>The soul spins at</span>
-            <span style={{ color: '#00ffff', fontWeight: 500 }}>This base is where that smile comes home.</span>
+            <span style={{ color: '#00e6ff', fontWeight: 600, textShadow: '0 0 4px #000' }}>This base is where that smile comes home.</span>
           </div>
         </div>
+
+
       </div>
 
       <style jsx>{`
