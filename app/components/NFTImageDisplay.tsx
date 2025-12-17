@@ -61,8 +61,8 @@ export default function NFTImageDisplay({ metadata }: NFTImageProps) {
       />
       {metadata && (
         <div style={styles.metadata}>
-          <h3>{metadata.name}</h3>
-          <p>{metadata.description}</p>
+          <h3 style={{ textAlign: 'center', marginBottom: 0 }}>{metadata.name}</h3>
+          <p style={{ textAlign: 'center', marginTop: 4 }}>{metadata.description}</p>
           {metadata.attributes && metadata.attributes.length > 0 && (
             <div style={styles.attributes}>
               {metadata.attributes.map((attr) => (

@@ -1,6 +1,11 @@
 'use client';
 
-import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, useConnect, useDisconnect } from 'wagmi';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+  const { connect, connectors, isPending: isConnecting, error: connectError } = useConnect({
+    connector: new InjectedConnector(),
+  });
+  const { disconnect } = useDisconnect();
 import { parseEther } from 'viem';
 import { useEffect, useState } from 'react';
 import NFTImageDisplay from './NFTImageDisplay';
@@ -69,13 +74,50 @@ export default function MintComponent() {
     <div style={styles.container}>
       <div style={styles.verticalContent}>
 
+        {/* Botão Connect Wallet */}
+        <div style={{ width: '100%', margin: '1.2rem 0 0.5rem 0', display: 'flex', justifyContent: 'center' }}>
+          {!isConnected ? (
+            <button
+              onClick={() => connect()}
+              disabled={isConnecting}
+              style={{
+                ...styles.button,
+                fontSize: '1.1rem',
+                borderRadius: '10px',
+                width: '95%',
+                background: 'linear-gradient(90deg, #ffb347 0%, #ffcc33 100%)',
+                color: '#222',
+                margin: '0 auto',
+                ...((isConnecting) ? styles.buttonDisabled : {}),
+              }}
+            >
+              {isConnecting ? 'Connecting...' : 'Connect Wallet'}
+            </button>
+          ) : (
+            <button
+              onClick={() => disconnect()}
+              style={{
+                ...styles.button,
+                fontSize: '1.1rem',
+                borderRadius: '10px',
+                width: '95%',
+                background: 'linear-gradient(90deg, #00c6fb 0%, #005bea 100%)',
+                color: '#fff',
+                margin: '0 auto',
+              }}
+            >
+              {address ? `Connected: ${address.slice(0, 6)}...${address.slice(-4)}` : 'Connected'} (Disconnect)
+            </button>
+          )}
+        </div>
+
 
         <div style={styles.imageSection}>
           <NFTImageDisplay metadata={nftMetadata} />
         </div>
 
-        {/* Botão Mint destacado, logo abaixo da imagem */}
-        <div style={{ width: '100%', margin: '1.2rem 0 1.2rem 0', display: 'flex', justifyContent: 'center' }}>
+        {/* Botão Mint destacado, logo abaixo do Connect */}
+        <div style={{ width: '100%', margin: '0.5rem 0 1.2rem 0', display: 'flex', justifyContent: 'center' }}>
           <button
             onClick={handleMint}
             disabled={!isConnected || isMinting || isConfirming}

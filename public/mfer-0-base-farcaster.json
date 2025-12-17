@@ -1,0 +1,35 @@
+{
+  "frame": {
+    "name": "mfer-o-base",
+    "version": "1",
+    "iconUrl": "https://mfer-o-base.netlify.app/icon.png",
+    "homeUrl": "https://mfer-o-base.netlify.app",
+    "imageUrl": "https://mfer-o-base.netlify.app/image.png",
+    "buttonTitle": "Mint button",
+    "splashImageUrl": "https://mfer-o-base.netlify.app/splash.png",
+    "splashBackgroundColor": "#3272b0",
+    "subtitle": "That's not animation; that's a ritual.",
+    "description": "The art isn't in the spin; it's in that precise moment of recognition.",
+    "primaryCategory": "art-creativity",
+    "screenshotUrls": [
+      "https://mfer-o-base.netlify.app/screenshot.png"
+    ],
+    "heroImageUrl": "https://mfer-o-base.netlify.app/hero.png",
+    "tags": [
+      "mint",
+      "base",
+      "mfer",
+      "miniapp",
+      "nft"
+    ],
+    "tagline": "Mint pure “Kinmutable” lore!",
+    "ogTitle": "The eyes. And the smile.",
+    "ogDescription": "Kin’s exclusive offering to the new ecosystem",
+    "ogImageUrl": "https://mfer-o-base.netlify.app/KinMint-app.png"
+  },
+  "accountAssociation": {
+    "header": "eyJmaWQiOjM0OTY3NSwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDc4QkExMTJlMGIzRWE0OTVGQWM5RDJiN2VlOTZiNDYxQjhlNmYwRjUifQ",
+    "payload": "eyJkb21haW4iOiJtZmVyLW8tYmFzZS5uZXRsaWZ5LmFwcCJ9",
+    "signature": "9Mo944SqYMKVm7DtEs2ytAJ3SPI1+jOL7u5YdCnyKZtj1IgQeAnu1LZCpIVdiP5kuOaUqPi9Ej2XQof82EdG9Bs="
+  }
+}
