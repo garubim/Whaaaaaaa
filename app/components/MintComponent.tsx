@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import NFTImageDisplay from './NFTImageDisplay';
 
 const CONTRACT_ADDRESS = '0x86a34dFaB59996C6fB809D1F2B016a0eD397E682' as const;
-const MINT_PRICE = '0.0003'; // ETH on testnet
+const MINT_PRICE = '0.0003'; 
 
 const CONTRACT_ABI = [
   {
@@ -56,12 +56,12 @@ export default function MintComponent() {
   };
 
   const nftMetadata = {
-    name: 'Mfer 1',
-    description: 'Whaaa?! Mfer-0-base - Exclusive NFT Collection on Base',
+    name: 'Mfer ',
+    description: 'Kin’s exclusive offering to the new ecosystem', 
     attributes: [
       { trait_type: 'Collection', value: 'Mfer-bk-0-base' },
       { trait_type: 'Chain', value: 'Base' },
-      { trait_type: 'The soul spins at ', value: 'This base is where that smile comes home.' },
+      { trait_type: 'The soul spins', value: 'This base is where that smile comes home.' },
     ],
   };
 
@@ -105,41 +105,40 @@ export default function MintComponent() {
         {successMessage && <p style={styles.success}>✅ {successMessage}</p>}
 
         {/* Detalhes integrados: Collection, Chain, Address, Price, Wallet, The soul spins at */}
-        <div style={{ ...styles.contractInfo, marginTop: '0.5rem' }}>
+        <div style={{ ...styles.contractInfo, marginTop: '0.0rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Collection</span>
-            <span style={{ color: '#00e6ff', fontWeight: 600, textShadow: '0 0 4px #000' }}>Mfer-bk-0-base</span>
+            <span style={{ color: '#fff', fontWeight: 600 }}>Mfer-bk-0-base</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Chain</span>
-            <span style={{ color: '#00e6ff', fontWeight: 600, textShadow: '0 0 4px #000' }}>Base</span>
+            <span style={{ color: '#fff', fontWeight: 600 }}>Base</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Address</span>
-            <code style={{ ...styles.addressCode, background: 'none', padding: 0, color: '#fff', textShadow: '0 0 4px #000' }}>{CONTRACT_ADDRESS.slice(0, 8)}...{CONTRACT_ADDRESS.slice(-6)}</code>
+            <code style={{ ...styles.addressCode, background: 'none', padding: 0, color: '#fff' }}>{CONTRACT_ADDRESS.slice(0, 8)}...{CONTRACT_ADDRESS.slice(-6)}</code>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Price</span>
-            <span style={{ ...styles.price, color: '#fff', textShadow: '0 0 6px #00e6ff, 0 0 2px #000' }}>{MINT_PRICE} ETH</span>
+            <span style={{ ...styles.price, color: '#fff' }}>{MINT_PRICE} ETH</span>
           </div>
           {isConnected && (
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
               <span style={{ fontWeight: 600 }}>Wallet</span>
-              <code style={{ ...styles.addressCode, background: 'none', padding: 0, color: '#fff', textShadow: '0 0 4px #000' }}>{address?.slice(0, 10)}...</code>
+              <code style={{ ...styles.addressCode, background: 'none', padding: 0, color: '#fff' }}>{address?.slice(0, 10)}...</code>
             </div>
           )}
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 0 }}>
-            <span style={{ fontWeight: 600 }}>The soul spins at</span>
-            <span style={{ color: '#00e6ff', fontWeight: 600, textShadow: '0 0 4px #000' }}>This base is where that smile comes home.</span>
+            <span style={{ fontWeight: 600, textAlign: 'center', width: '100%' }}>The art isnt in the spin, its in that precise moment of recognition.</span>
           </div>
         </div>
 
 
       </div>
 
-      <style jsx>{`
+      <style jsx>{`'main'
         code {
-          font-family: 'Courier New', monospace;
+          font-family: 'Inter';
           font-size: 0.85rem;
           word-break: break-all;
         }
@@ -157,13 +156,13 @@ const styles = {
   container: {
     width: '100%',
     maxWidth: '1200px',
-    padding: '2rem',
+    padding: '0.0rem',
   },
   verticalContent: {
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'center' as const,
-    gap: '2rem',
+    gap: '0rem',
     width: '100%',
     maxWidth: '500px',
     margin: '0 auto',
@@ -190,7 +189,7 @@ const styles = {
     padding: '0.5rem',
     borderRadius: '4px',
     display: 'block',
-    marginTop: '0.5rem',
+    marginTop: '0.1rem',
     wordBreak: 'break-all' as const,
   },
   price: {

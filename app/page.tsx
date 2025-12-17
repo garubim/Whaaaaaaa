@@ -20,13 +20,13 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.header}>
-        <h1>Whaaaaa! NFT Collection</h1>
-        <p>Mint exclusive NFTs on Base network</p>
+        <h1>The eyes! And the smile!</h1>
+        <p style={{ fontSize: '1.56em', marginTop: '40px' }}>Mint pure <i>Kinmutable</i> lore!</p>
       </div>
 
       <div className={styles.promo}>
-        <p> * The eyes see the flatline at 9 o-clock.</p>
-        <p> * The mouse bends it into a smile.!</p>
+        <p style={{ marginBottom: '10px' }}> * The eyes see the flatline at 9 o-clock.</p>
+        <p style={{ marginTop: '10px' }}> * The mouse bends it into a smile.!</p>
       </div>
 
       <MintComponent />

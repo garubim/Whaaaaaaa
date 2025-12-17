@@ -1,0 +1,29 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "miniapp": {
+    "version": "1",
+    "name": "Whaaa?! Mfer-0-base",
+    "homeUrl": "https://694177152a650b998ece26b4--mfer-o-base.netlify.app/",
+    "iconUrl": "https://694177152a650b998ece26b4--mfer-o-base.netlify.app/icon.png",
+    "splashImageUrl": "https://694177152a650b998ece26b4--mfer-o-base.netlify.app/splash.png",
+    "splashBackgroundColor": "#000000",
+    "webhookUrl": "",
+    "subtitle": "Mint NFTs on Base",
+    "description": "Mint exclusive Kin's NFTs on Base network.",
+    "screenshotUrls": [
+      "https://694177152a650b998ece26b4--mfer-o-base.netlify.app/screenshot1.png"
+    ],
+    "primaryCategory": "collectibles",
+    "tags": ["nft", "base", "mint"],
+    "heroImageUrl": "https://694177152a650b998ece26b4--mfer-o-base.netlify.app/og.png",
+    "tagline": "Mint your NFT on Base!",
+    "ogTitle": "Whaaa?! Mfer-0-base",
+    "ogDescription": "Mint exclusive Kin's NFTs on Base network.",
+    "ogImageUrl": "https://694177152a650b998ece26b4--mfer-o-base.netlify.app/og.png",
+    "noindex": true
+  }
+}

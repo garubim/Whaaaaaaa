@@ -3,8 +3,8 @@ import RootProvider from "./rootProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Whaaa?! Mfer-0'-base - NFT Mint on Base",
-  description: "Mint exclusive Kin's NFTs on Base network",
+  title: "The eyes. And the smile.",
+  description: "Mint pure “Kinmutable” lore!",
 };
 
 export default function RootLayout({
