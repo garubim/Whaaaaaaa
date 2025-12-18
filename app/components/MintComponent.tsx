@@ -1,6 +1,6 @@
 'use client';
 
-import { useAccount, useWriteContract, useWaitForTransactionReceipt, useChainId, useSwitchChain, useConnect, useDisconnect } from 'wagmi';
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, useConnect, useChainId, useSwitchChain, useDisconnect } from 'wagmi';
 import { parseEther } from 'viem';
 import { base } from 'viem/chains';
 import { useEffect, useState } from 'react';
@@ -24,11 +24,6 @@ export default function MintComponent() {
   const chainId = useChainId();
   const { switchChain } = useSwitchChain();
   const { connect, connectors } = useConnect();
-  useEffect(() => {
-    console.log('Available connectors:', connectors.map((c) => c.name));
-  }, [connectors]);
-  const [isConnecting, setIsConnecting] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const { disconnect } = useDisconnect();
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -49,14 +44,6 @@ export default function MintComponent() {
       setError(null);
     }
   }, [writeError, isConfirmed, hash]);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (isConnected) setIsConnecting(false);
-  }, [isConnected]);
 
   const handleMint = () => {
     if (!isConnected) {
@@ -84,12 +71,12 @@ export default function MintComponent() {
   };
 
   const nftMetadata = {
-    name: 'Mfer',
-    description: "That's not animation; that's a <strong>ritual</strong>",
+    name: 'Mfer 1',
+    description: 'Whaaa?! Mfer-0-base - Exclusive NFT Collection on Base',
     attributes: [
       { trait_type: 'Collection', value: 'Mfer-0-base' },
       { trait_type: 'Chain', value: 'Base' },
-      { trait_type: 'The soul spins', value: 'Base is where that smile comes home.' },
+      { trait_type: 'The soul spins at ', value: 'This base is where that smile comes home.' },
     ],
   };
 
@@ -97,70 +84,69 @@ export default function MintComponent() {
     <div style={styles.container}>
       <div style={styles.verticalContent}>
 
-        {/* Botão Connect Wallet */}
-        <div style={{ width: '100%', margin: '1.2rem 0 0.5rem 0', display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: '100%' }}>
-            {!isConnected ? (
-              <>
-                <button
-                  onClick={() => {
-                    setIsConnecting(true);
-                    const preferred = connectors.find((c) => /coinbase|base|walletconnect/i.test(c.name ?? '')) || connectors[0];
-                    if (preferred) connect({ connector: preferred });
-                    else {
-                      setError('Nenhum conector disponível.');
-                      setIsConnecting(false);
-                    }
-                  }}
-                  disabled={isConnecting}
-                  style={{
-                    ...styles.button,
-                    fontSize: '1.1rem',
-                    borderRadius: '10px',
-                    width: '95%',
-                    background: 'linear-gradient(90deg, #ffb347 0%, #ffcc33 100%)',
-                    color: '#222',
-                    margin: '0 auto',
-                    ...((isConnecting) ? styles.buttonDisabled : {}),
-                  }}
-                >
-                  {isConnecting ? 'Connecting...' : 'Connect Wallet'}
-                </button>
-
-                {/* Lista de conectores disponíveis (opcional) */}
-                <div style={{ display: 'flex', gap: 8, marginTop: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
-                  {connectors.map((c) => (
-                    <button
-                      key={c.id}
-                      onClick={() => {
-                        setError(null);
-                        setIsConnecting(true);
-                        connect({ connector: c });
-                      }}
-                      style={{ padding: '0.45rem 0.7rem', borderRadius: 8, border: '1px solid rgba(255,255,255,0.08)', background: 'transparent', color: '#fff', cursor: 'pointer' }}
-                    >
-                      {c.name}
-                    </button>
-                  ))}
-                </div>
-              </>
-            ) : (
+        {/* Botão Connect Wallet + botões por conector */}
+        <div style={{ width: '100%', margin: '1.2rem 0 0.5rem 0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          {!isConnected ? (
+            <>
               <button
-                onClick={() => disconnect()}
+                onClick={() => connectors && connectors[0] && connect({ connector: connectors[0] })}
+                disabled={!connectors || connectors.length === 0}
                 style={{
                   ...styles.button,
                   fontSize: '1.1rem',
                   borderRadius: '10px',
                   width: '95%',
-                  background: 'linear-gradient(90deg, #00c6fb 0%, #005bea 100%)',
-                  color: '#fff',
+                  background: 'linear-gradient(90deg, #ffb347 0%, #ffcc33 100%)',
+                  color: '#222',
                   margin: '0 auto',
+                  ...((!connectors || connectors.length === 0) ? styles.buttonDisabled : {}),
                 }}
               >
-                {address ? `Connected: ${address.slice(0, 6)}...${address.slice(-4)}` : 'Connected'} (Disconnect)
+                {'Connect Wallet'}
               </button>
-            )}
-          </div>
+
+              <div style={{ display: 'flex', gap: '0.6rem', marginTop: '0.6rem', width: '95%', justifyContent: 'center', flexWrap: 'wrap' }}>
+                {connectors?.map((c) => {
+                  const label = c.name && c.name.toLowerCase().includes('coinbase') ? 'Base App' : c.name;
+                  return (
+                    <button
+                      key={c.id}
+                      onClick={() => connect({ connector: c })}
+                      disabled={!c.ready}
+                      title={c.name}
+                      style={{
+                        padding: '0.6rem 0.8rem',
+                        borderRadius: '10px',
+                        border: 'none',
+                        background: 'rgba(255,255,255,0.06)',
+                        color: '#fff',
+                        cursor: c.ready ? 'pointer' : 'not-allowed',
+                        fontSize: '0.95rem',
+                        flex: '1 0 44%'
+                      }}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            <button
+              onClick={() => disconnect()}
+              style={{
+                ...styles.button,
+                fontSize: '1.1rem',
+                borderRadius: '10px',
+                width: '95%',
+                background: 'linear-gradient(90deg, #00c6fb 0%, #005bea 100%)',
+                color: '#fff',
+                margin: '0 auto',
+              }}
+            >
+              {address ? `Connected: ${address.slice(0, 6)}...${address.slice(-4)}` : 'Connected'} (Disconnect)
+            </button>
+          )}
         </div>
 
 
@@ -168,64 +154,30 @@ export default function MintComponent() {
           <NFTImageDisplay metadata={nftMetadata} />
         </div>
 
-        {/* Botão único: conecta quando desconectado, faz mint quando conectado */}
-        <div style={{ width: '100%', margin: '0.8rem 0', display: 'flex', justifyContent: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', width: '100%' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%', justifyContent: 'center' }}>
-              {(isMinting || isConfirming) && (
-                <div style={styles.spinnerSmall} aria-hidden></div>
-              )}
-            </div>
-
-            <button
-              onClick={() => {
-                setError(null);
-                if (!isConnected) {
-                  setIsConnecting(true);
-                  if (connectors[0]) connect({ connector: connectors[0] });
-                  else {
-                    setError('Nenhum conector disponível.');
-                    setIsConnecting(false);
-                  }
-                  return;
-                }
-                handleMint();
-              }}
-              disabled={isMinting || isConfirming || isConnecting}
-              style={{
-                ...styles.button,
-                fontSize: '1.1rem',
-                padding: '0.9rem 0',
-                borderRadius: '12px',
-                margin: '0 auto',
-                maxWidth: '400px',
-                width: '95%',
-                background: 'linear-gradient(90deg, #00c6fb 0%, #005bea 100%)',
-                color: '#fff',
-                letterSpacing: '0.04em',
-                ...(isMinting || isConfirming ? styles.buttonDisabled : {}),
-              }}
-            >
-              {!mounted && 'Connect Wallet'}
-              {mounted && !isConnected && (isConnecting ? 'Connecting...' : 'Connect Wallet')}
-              {mounted && isConnected && isMinting && 'Waiting for Impact...'}
-              {mounted && isConnected && isConfirming && 'Minting...'}
-              {mounted && isConnected && !isMinting && !isConfirming && 'Mint Next Level NFT'}
-            </button>
-            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-              <div style={{ color: '#ccc', fontSize: '0.85rem' }}>
-                {mounted ? (isConnected ? `Connected — chainId: ${chainId ?? 'unknown'}` : 'Not connected') : ''}
-              </div>
-              {isConnected && (
-                <button
-                  onClick={() => disconnect()}
-                  style={{ ...styles.button, maxWidth: '140px', width: 'auto', padding: '0.4rem 0.75rem', fontSize: '0.85rem' }}
-                >
-                  Disconnect
-                </button>
-              )}
-            </div>
-          </div>
+        {/* Botão Mint destacado, logo abaixo da imagem */}
+        <div style={{ width: '100%', margin: '1.2rem 0 1.2rem 0', display: 'flex', justifyContent: 'center' }}>
+          <button
+            onClick={handleMint}
+            disabled={!isConnected || isMinting || isConfirming}
+            style={{
+              ...styles.button,
+              fontSize: '1.2rem',
+              padding: '0.9rem 0',
+              borderRadius: '14px',
+              margin: '0 auto',
+              maxWidth: '100%',
+              width: '95%',
+              background: 'linear-gradient(90deg, #00c6fb 0%, #005bea 100%)',
+              color: '#fff',
+              boxShadow: '0 0 16px 0 #00c6fb80',
+              letterSpacing: '0.04em',
+              ...((!isConnected || isMinting || isConfirming) ? styles.buttonDisabled : {}),
+            }}
+          >
+            {isMinting && 'Waiting for confirmation...'}
+            {isConfirming && 'Minting...'}
+            {!isMinting && !isConfirming && 'Mint NFT'}
+          </button>
         </div>
 
         {/* Mensagens de erro/sucesso */}
@@ -236,11 +188,11 @@ export default function MintComponent() {
         <div style={{ ...styles.contractInfo, marginTop: '0.0rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Collection</span>
-            <span style={{ color: '#00e6ff', fontWeight: 600 }}>Mfer-0-base</span>
+            <span style={{ color: '#00e6ff', fontWeight: 600, textShadow: '0 0 4px #000' }}>Mfer-bk-0-base</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Chain</span>
-            <span style={{ color: '#00e6ff', fontWeight: 600 }}>Base</span>
+            <span style={{ color: '#00e6ff', fontWeight: 600, textShadow: '0 0 4px #000' }}>Base</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Address</span>
@@ -256,15 +208,16 @@ export default function MintComponent() {
               <code style={{ ...styles.addressCode, background: 'none', padding: 0, color: '#fff' }}>{address?.slice(0, 10)}...</code>
             </div>
           )}
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 0 }}>
-            <span style={{ fontWeight: 600 }}>The art isnt in the spin; its in that precise moment of recognition.</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 0 }}>
+            <span style={{ fontWeight: 600 }}>The soul spins at</span>
+            <span style={{ color: '#00e6ff', fontWeight: 600, textShadow: '0 0 4px #000' }}>This base is where that smile comes home.</span>
           </div>
         </div>
 
 
       </div>
 
-      <style jsx>{`
+      <style jsx>{`'main'
         code {
           font-family: 'Inter';
           font-size: 0.85rem;
@@ -338,6 +291,7 @@ const styles = {
     fontWeight: 'bold' as const,
     borderRadius: '8px',
     border: 'none',
+    backgroundColor: '#00ffff',
     color: '#333',
     cursor: 'pointer' as const,
     transition: 'all 0.3s ease',

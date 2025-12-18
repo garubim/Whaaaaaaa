@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const MFER_IMAGE_CID = 'bafybeiaevaflz35fjr4qhrrcaejbxqiie5v3itvgqmabtstwbpfe7vlodq';
 const PINATA_GATEWAY = 'https://orange-eager-slug-339.mypinata.cloud/ipfs';
@@ -22,20 +22,6 @@ export default function NFTImageDisplay({ metadata, showAttributes = false }: NF
   const [error, setError] = useState<string | null>(null);
   const [imageUrl] = useState(`${PINATA_GATEWAY}/${MFER_IMAGE_CID}`);
 
-  useEffect(() => {
-    const preloadImage = () => {
-      const img = new Image();
-      img.onload = () => setIsLoading(false);
-      img.onerror = () => {
-        setError('Failed to load image');
-        setIsLoading(false);
-      };
-      img.src = imageUrl;
-    };
-
-    preloadImage();
-  }, [imageUrl]);
-
   if (error) {
     return (
       <div style={styles.errorContainer}>
@@ -46,18 +32,14 @@ export default function NFTImageDisplay({ metadata, showAttributes = false }: NF
 
   return (
     <div style={styles.container}>
-      {isLoading && (
-        <div style={styles.spinner}>
-          <div style={styles.spinnerInner}></div>
-        </div>
-      )}
       <img
         src={imageUrl}
-        alt="NFT Artwork"
-        style={{
-          ...styles.image,
-          opacity: isLoading ? 0 : 1,
-          transition: 'opacity 0.3s ease-in-out',
+        alt={metadata?.name || 'NFT'}
+        style={styles.image}
+        onLoad={() => setIsLoading(false)}
+        onError={() => {
+          setError('Failed to load image');
+          setIsLoading(false);
         }}
       />
       {metadata && (
@@ -90,49 +72,40 @@ export default function NFTImageDisplay({ metadata, showAttributes = false }: NF
           )}
         </div>
       )}
-
-      <style jsx>{`
-        @keyframes spin {
-          to {
-            transform: rotate(360deg);
-          }
-        }
-      `}</style>
     </div>
   );
 }
 
 const styles = {
   container: {
-    display: 'flex' as const,
+    display: 'flex',
     flexDirection: 'column' as const,
+    alignItems: 'center' as const,
     gap: '1.5rem',
-    padding: '1rem',
-    borderRadius: '12px',
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    backdropFilter: 'blur(10px)',
-    border: '1px solid rgba(255, 255, 255, 0.2)',
+    padding: '2.5rem',
+    background: 'rgba(255,255,255,0.10)',
+    borderRadius: '20px',
+    maxWidth: '520px',
+    minWidth: '340px',
+    margin: '0 auto',
+    boxShadow: '0 0 32px 0 #00c6fb30',
   },
   image: {
     width: '100%',
-    height: 'auto',
-    borderRadius: '8px',
+    maxWidth: '420px',
+    minWidth: '320px',
+    minHeight: '320px',
     aspectRatio: '1',
+    borderRadius: '16px',
+    marginBottom: '1.5rem',
+    boxShadow: '0 0 32px 0 #00c6fb40',
     objectFit: 'cover' as const,
+    background: '#222',
   },
-  spinner: {
-    position: 'absolute' as const,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-  },
-  spinnerInner: {
-    width: '40px',
-    height: '40px',
-    border: '4px solid rgba(255, 255, 255, 0.2)',
-    borderTopColor: 'white',
-    borderRadius: '50%',
-    animation: 'spin 1s linear infinite',
+  errorContainer: {
+    padding: '2rem',
+    color: 'red',
+    textAlign: 'center' as const,
   },
   metadata: {
     color: 'white',
@@ -171,28 +144,21 @@ const styles = {
     display: 'grid' as const,
     gap: '0.5rem',
     marginTop: '1rem',
+    width: '100%',
   },
   attribute: {
     display: 'flex' as const,
-    justifyContent: 'space-between' as const,
-    padding: '0.5rem',
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: '4px',
-    fontSize: '0.85rem',
+    justifyContent: 'space-between',
+    background: 'rgba(0,0,0,0.13)',
+    borderRadius: '6px',
+    padding: '0.4rem 0.7rem',
   },
   traitType: {
-    fontWeight: 'bold' as const,
+    fontWeight: 600,
     opacity: 0.8,
   },
   traitValue: {
     color: '#00ffff',
-    fontWeight: '600' as const,
-  },
-  errorContainer: {
-    padding: '2rem',
-    backgroundColor: 'rgba(255, 100, 100, 0.2)',
-    borderRadius: '8px',
-    color: '#ff6464',
-    textAlign: 'center' as const,
+    fontWeight: 600,
   },
 };
