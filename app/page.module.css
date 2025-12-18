@@ -39,7 +39,7 @@
 .header {
   text-align: center;
   color: white;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem; /* reduced spacing by ~50% */
 }
 
 .header h1 {
@@ -49,9 +49,9 @@
 }
 
 .header p {
-  font-size: 1.2rem;
+  font-size: 1.56rem; /* increased ~30% from 1.2rem */
   margin: 0;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 .footer {
@@ -71,15 +71,14 @@
 }
 
 .promo {
-  background: rgba(255,255,255,0.08);
-  border-radius: 12px;
-  padding: 1.5rem 2rem;
-  margin-bottom: 2rem;
+  background: rgba(255,255,255,0.10);
+  border-radius: 14px;
+  padding: 1.25rem 2rem; /* increased padding to give more room around the lines */
+  margin-bottom: 1rem;
   color: #fff;
   font-family: 'Inter',;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   text-align: center;
-  /* removed subtle shadow for cleaner look */
 }
 
 @media (max-width: 768px) {
