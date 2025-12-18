@@ -24,6 +24,9 @@ export default function MintComponent() {
   const chainId = useChainId();
   const { switchChain } = useSwitchChain();
   const { connect, connectors } = useConnect();
+  useEffect(() => {
+    console.log('Available connectors:', connectors.map((c) => c.name));
+  }, [connectors]);
   const [isConnecting, setIsConnecting] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { disconnect } = useDisconnect();
@@ -63,7 +66,7 @@ export default function MintComponent() {
     // Ensure the wallet is on Base mainnet (chain id 8453)
     if (chainId !== base.id) {
       if (switchChain) {
-        switchChain(base.id);
+        switchChain({ chainId: base.id });
         setError('Por favor, mude sua carteira para Base mainnet (chain 8453).');
       } else {
         setError('Por favor, mude sua carteira para Base mainnet (chain 8453).');
@@ -96,39 +99,68 @@ export default function MintComponent() {
 
         {/* Botão Connect Wallet */}
         <div style={{ width: '100%', margin: '1.2rem 0 0.5rem 0', display: 'flex', justifyContent: 'center' }}>
-          {!isConnected ? (
-            <button
-              onClick={() => { setIsConnecting(true); connect(); }}
-              disabled={isConnecting}
-              style={{
-                ...styles.button,
-                fontSize: '1.1rem',
-                borderRadius: '10px',
-                width: '95%',
-                background: 'linear-gradient(90deg, #ffb347 0%, #ffcc33 100%)',
-                color: '#222',
-                margin: '0 auto',
-                ...((isConnecting) ? styles.buttonDisabled : {}),
-              }}
-            >
-              {isConnecting ? 'Connecting...' : 'Connect Wallet'}
-            </button>
-          ) : (
-            <button
-              onClick={() => disconnect()}
-              style={{
-                ...styles.button,
-                fontSize: '1.1rem',
-                borderRadius: '10px',
-                width: '95%',
-                background: 'linear-gradient(90deg, #00c6fb 0%, #005bea 100%)',
-                color: '#fff',
-                margin: '0 auto',
-              }}
-            >
-              {address ? `Connected: ${address.slice(0, 6)}...${address.slice(-4)}` : 'Connected'} (Disconnect)
-            </button>
-          )}
+          <div style={{ width: '100%' }}>
+            {!isConnected ? (
+              <>
+                <button
+                  onClick={() => {
+                    setIsConnecting(true);
+                    const preferred = connectors.find((c) => /coinbase|base|walletconnect/i.test(c.name ?? '')) || connectors[0];
+                    if (preferred) connect({ connector: preferred });
+                    else {
+                      setError('Nenhum conector disponível.');
+                      setIsConnecting(false);
+                    }
+                  }}
+                  disabled={isConnecting}
+                  style={{
+                    ...styles.button,
+                    fontSize: '1.1rem',
+                    borderRadius: '10px',
+                    width: '95%',
+                    background: 'linear-gradient(90deg, #ffb347 0%, #ffcc33 100%)',
+                    color: '#222',
+                    margin: '0 auto',
+                    ...((isConnecting) ? styles.buttonDisabled : {}),
+                  }}
+                >
+                  {isConnecting ? 'Connecting...' : 'Connect Wallet'}
+                </button>
+
+                {/* Lista de conectores disponíveis (opcional) */}
+                <div style={{ display: 'flex', gap: 8, marginTop: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
+                  {connectors.map((c) => (
+                    <button
+                      key={c.id}
+                      onClick={() => {
+                        setError(null);
+                        setIsConnecting(true);
+                        connect({ connector: c });
+                      }}
+                      style={{ padding: '0.45rem 0.7rem', borderRadius: 8, border: '1px solid rgba(255,255,255,0.08)', background: 'transparent', color: '#fff', cursor: 'pointer' }}
+                    >
+                      {c.name}
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <button
+                onClick={() => disconnect()}
+                style={{
+                  ...styles.button,
+                  fontSize: '1.1rem',
+                  borderRadius: '10px',
+                  width: '95%',
+                  background: 'linear-gradient(90deg, #00c6fb 0%, #005bea 100%)',
+                  color: '#fff',
+                  margin: '0 auto',
+                }}
+              >
+                {address ? `Connected: ${address.slice(0, 6)}...${address.slice(-4)}` : 'Connected'} (Disconnect)
+              </button>
+            )}
+          </div>
         </div>
 
 
@@ -306,7 +338,6 @@ const styles = {
     fontWeight: 'bold' as const,
     borderRadius: '8px',
     border: 'none',
-    backgroundColor: '#00ffff',
     color: '#333',
     cursor: 'pointer' as const,
     transition: 'all 0.3s ease',
