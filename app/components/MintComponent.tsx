@@ -1,11 +1,33 @@
 'use client';
 
-import { useAccount, useWriteContract, useWaitForTransactionReceipt, useChainId, useSwitchChain, useDisconnect } from 'wagmi';
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, useChainId, useSwitchChain, useDisconnect, useConnect } from 'wagmi';
 import { Connected } from '@coinbase/onchainkit';
 import { parseEther } from 'viem';
 import { base } from 'viem/chains';
 import { useEffect, useState } from 'react';
 import NFTImageDisplay from './NFTImageDisplay';
+
+function ConnectButtonArea() {
+  const { connect, connectors, isLoading } = useConnect();
+  const connector = connectors && connectors.length > 0 ? connectors[0] : undefined;
+
+  return (
+    <button
+      onClick={() => connector && connect({ connector })}
+      style={{
+        ...styles.button,
+        fontSize: '1.05rem',
+        borderRadius: '10px',
+        width: '95%',
+        background: 'rgba(255,255,255,0.06)',
+        color: '#fff',
+        padding: '0.7rem 1rem',
+      }}
+    >
+      {isLoading ? 'Connecting…' : 'Connect Wallet'}
+    </button>
+  );
+}
 
 const CONTRACT_ADDRESS = '0x86a34dFaB59996C6fB809D1F2B016a0eD397E682' as const;
 const MINT_PRICE = '0.0003'; 
@@ -84,24 +106,29 @@ export default function MintComponent() {
     <div style={styles.container}>
       <div style={styles.verticalContent}>
 
-        {/* Use OnchainKit Connected component: shows OnchainKit connect UI (modal) when disconnected */}
         <div style={{ width: '100%', margin: '1.2rem 0 0.5rem 0', display: 'flex', justifyContent: 'center' }}>
-          <Connected>
-            <button
-              onClick={() => disconnect()}
-              style={{
-                ...styles.button,
-                fontSize: '1.1rem',
-                borderRadius: '10px',
-                width: '95%',
-                background: 'linear-gradient(90deg, #00c6fb 0%, #005bea 100%)',
-                color: '#fff',
-                margin: '0 auto',
-              }}
-            >
-              {address ? `Connected: ${address.slice(0, 6)}...${address.slice(-4)}` : 'Connected'} (Disconnect)
-            </button>
-          </Connected>
+          {/* Simple connect / disconnect UI for clarity during hotfix */}
+          {!isConnected ? (
+            <ConnectButtonArea />
+          ) : (
+            <div style={{ display: 'flex', gap: '0.5rem', width: '95%', justifyContent: 'center' }}>
+              <button
+                onClick={() => disconnect()}
+                style={{
+                  ...styles.button,
+                  fontSize: '1.0rem',
+                  borderRadius: '10px',
+                  padding: '0.6rem 1rem',
+                  background: 'rgba(255,255,255,0.06)',
+                  color: '#fff',
+                  width: 'auto',
+                }}
+              >
+                Disconnect
+              </button>
+              <div style={{ alignSelf: 'center', color: '#fff' }}>{address ? `${address.slice(0, 6)}...${address.slice(-4)}` : ''}</div>
+            </div>
+          )}
         </div>
 
 
@@ -124,7 +151,7 @@ export default function MintComponent() {
               width: '95%',
               background: 'linear-gradient(90deg, #00c6fb 0%, #005bea 100%)',
               color: '#fff',
-              boxShadow: '0 0 16px 0 #00c6fb80',
+              // removed glow for cleaner aesthetic
               letterSpacing: '0.04em',
               ...((!isConnected || isMinting || isConfirming) ? styles.buttonDisabled : {}),
             }}
@@ -143,11 +170,11 @@ export default function MintComponent() {
         <div style={{ ...styles.contractInfo, marginTop: '0.0rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Collection</span>
-            <span style={{ color: '#00e6ff', fontWeight: 600, textShadow: '0 0 4px #000' }}>Mfer-bk-0-base</span>
+            <span style={{ color: '#00e6ff', fontWeight: 600 }}>Mfer-bk-0-base</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Chain</span>
-            <span style={{ color: '#00e6ff', fontWeight: 600, textShadow: '0 0 4px #000' }}>Base</span>
+            <span style={{ color: '#00e6ff', fontWeight: 600 }}>Base</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Address</span>
@@ -165,7 +192,7 @@ export default function MintComponent() {
           )}
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 0 }}>
             <span style={{ fontWeight: 600 }}>The soul spins at</span>
-            <span style={{ color: '#00e6ff', fontWeight: 600, textShadow: '0 0 4px #000' }}>This base is where that smile comes home.</span>
+            <span style={{ color: '#00e6ff', fontWeight: 600 }}>This base is where that smile comes home.</span>
           </div>
         </div>
 

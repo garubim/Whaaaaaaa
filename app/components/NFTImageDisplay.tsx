@@ -88,7 +88,7 @@ const styles = {
     maxWidth: '520px',
     minWidth: '340px',
     margin: '0 auto',
-    boxShadow: '0 0 32px 0 #00c6fb30',
+    // removed glow/shadow for cleaner aesthetic
   },
   image: {
     width: '100%',
@@ -98,7 +98,7 @@ const styles = {
     aspectRatio: '1',
     borderRadius: '16px',
     marginBottom: '1.5rem',
-    boxShadow: '0 0 32px 0 #00c6fb40',
+    // removed glow/shadow for cleaner aesthetic
     objectFit: 'cover' as const,
     background: '#222',
   },
