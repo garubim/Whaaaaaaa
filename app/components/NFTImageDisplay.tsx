@@ -141,17 +141,17 @@ const styles = {
     fontSize: '0.85rem',
   },
   attributes: {
-    display: 'grid' as const,
-    gap: '0.5rem',
-    marginTop: '1rem',
-    width: '100%',
-  },
+    display: 'flex',
+    flexDirection: 'column' as const,
+    alignItems: 'center' as const,
+    gap: '0.75rem',
+    padding: '1.25rem',
   attribute: {
     display: 'flex' as const,
     justifyContent: 'space-between',
     background: 'rgba(0,0,0,0.13)',
     borderRadius: '6px',
-    padding: '0.4rem 0.7rem',
+    /* cleaned shadow */
   },
   traitType: {
     fontWeight: 600,
@@ -160,5 +160,5 @@ const styles = {
   traitValue: {
     color: '#00ffff',
     fontWeight: 600,
-  },
-};
+    marginBottom: '0.75rem',
+    /* cleaned shadow */

@@ -39,7 +39,7 @@
 .header {
   text-align: center;
   color: white;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem; /* reduced spacing by ~50% */
 }
 
 .header h1 {
@@ -73,13 +73,12 @@
 .promo {
   background: rgba(255,255,255,0.08);
   border-radius: 12px;
-  padding: 1.5rem 2rem;
-  margin-bottom: 2rem;
+  padding: 0.75rem 1rem; /* reduce vertical padding ~50% */
+  margin-bottom: 1rem; /* reduce spacing below promo */
   color: #fff;
   font-family: 'Inter',;
   font-size: 1.1rem;
   text-align: center;
-  /* removed subtle shadow for cleaner look */
 }
 
 @media (max-width: 768px) {
