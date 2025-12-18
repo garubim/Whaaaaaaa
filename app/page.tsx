@@ -25,8 +25,8 @@ export default function Home() {
       </div>
 
       <div className={styles.promo}>
-        <p style={{ transform: 'translateY(-12px)', margin: 0 }}> * The eyes see the flatline at 9 o-clock.</p>
-        <p style={{ transform: 'translateY(12px)', margin: 0 }}> * The mouse bends it into a smile.!</p>
+        <p style={{ transform: 'translateY(-7px)', margin: 0 }}> * The eyes see the flatline at 9 o-clock.</p>
+        <p style={{ transform: 'translateY(7px)', margin: 0 }}> * The mouse bends it into a smile.!</p>
       </div>
 
       <MintComponent />

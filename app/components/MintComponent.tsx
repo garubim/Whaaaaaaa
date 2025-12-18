@@ -230,7 +230,7 @@ const styles = {
     alignItems: 'center' as const,
     gap: '0rem',
     width: '100%',
-    maxWidth: '500px',
+    maxWidth: '640px',
     margin: '0 auto',
   },
   imageSection: {
