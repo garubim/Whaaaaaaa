@@ -81,14 +81,13 @@ const styles = {
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'center' as const,
-    gap: '1.5rem',
-    padding: '2.5rem',
+    gap: '0.75rem',
+    padding: '1.25rem',
     background: 'rgba(255,255,255,0.10)',
     borderRadius: '20px',
     maxWidth: '520px',
     minWidth: '340px',
     margin: '0 auto',
-    // removed glow/shadow for cleaner aesthetic
   },
   image: {
     width: '100%',
@@ -97,8 +96,7 @@ const styles = {
     minHeight: '320px',
     aspectRatio: '1',
     borderRadius: '16px',
-    marginBottom: '1.5rem',
-    // removed glow/shadow for cleaner aesthetic
+    marginBottom: '0.75rem',
     objectFit: 'cover' as const,
     background: '#222',
   },
@@ -141,17 +139,17 @@ const styles = {
     fontSize: '0.85rem',
   },
   attributes: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    alignItems: 'center' as const,
-    gap: '0.75rem',
-    padding: '1.25rem',
+    display: 'grid' as const,
+    gap: '0.5rem',
+    marginTop: '1rem',
+    width: '100%',
+  },
   attribute: {
     display: 'flex' as const,
     justifyContent: 'space-between',
     background: 'rgba(0,0,0,0.13)',
     borderRadius: '6px',
-    /* cleaned shadow */
+    padding: '0.4rem 0.7rem',
   },
   traitType: {
     fontWeight: 600,
@@ -160,5 +158,5 @@ const styles = {
   traitValue: {
     color: '#00ffff',
     fontWeight: 600,
-    marginBottom: '0.75rem',
-    /* cleaned shadow */
+  },
+};
