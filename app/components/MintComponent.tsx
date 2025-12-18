@@ -1,6 +1,7 @@
 'use client';
 
-import { useAccount, useWriteContract, useWaitForTransactionReceipt, useConnect, useChainId, useSwitchChain, useDisconnect } from 'wagmi';
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, useChainId, useSwitchChain, useDisconnect } from 'wagmi';
+import { Connected } from '@coinbase/onchainkit';
 import { parseEther } from 'viem';
 import { base } from 'viem/chains';
 import { useEffect, useState } from 'react';
@@ -84,54 +85,9 @@ export default function MintComponent() {
     <div style={styles.container}>
       <div style={styles.verticalContent}>
 
-        {/* Botão Connect Wallet + botões por conector */}
-        <div style={{ width: '100%', margin: '1.2rem 0 0.5rem 0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          {!isConnected ? (
-            <>
-              <button
-                onClick={() => connectors && connectors[0] && connect({ connector: connectors[0] })}
-                disabled={!connectors || connectors.length === 0}
-                style={{
-                  ...styles.button,
-                  fontSize: '1.1rem',
-                  borderRadius: '10px',
-                  width: '95%',
-                  background: 'linear-gradient(90deg, #ffb347 0%, #ffcc33 100%)',
-                  color: '#222',
-                  margin: '0 auto',
-                  ...((!connectors || connectors.length === 0) ? styles.buttonDisabled : {}),
-                }}
-              >
-                {'Connect Wallet'}
-              </button>
-
-              <div style={{ display: 'flex', gap: '0.6rem', marginTop: '0.6rem', width: '95%', justifyContent: 'center', flexWrap: 'wrap' }}>
-                {connectors?.map((c) => {
-                  const label = c.name && c.name.toLowerCase().includes('coinbase') ? 'Base App' : c.name;
-                  return (
-                    <button
-                      key={c.id}
-                      onClick={() => connect({ connector: c })}
-                      disabled={!c.ready}
-                      title={c.name}
-                      style={{
-                        padding: '0.6rem 0.8rem',
-                        borderRadius: '10px',
-                        border: 'none',
-                        background: 'rgba(255,255,255,0.06)',
-                        color: '#fff',
-                        cursor: c.ready ? 'pointer' : 'not-allowed',
-                        fontSize: '0.95rem',
-                        flex: '1 0 44%'
-                      }}
-                    >
-                      {label}
-                    </button>
-                  );
-                })}
-              </div>
-            </>
-          ) : (
+        {/* Use OnchainKit Connected component: shows OnchainKit connect UI (modal) when disconnected */}
+        <div style={{ width: '100%', margin: '1.2rem 0 0.5rem 0', display: 'flex', justifyContent: 'center' }}>
+          <Connected>
             <button
               onClick={() => disconnect()}
               style={{
@@ -146,7 +102,7 @@ export default function MintComponent() {
             >
               {address ? `Connected: ${address.slice(0, 6)}...${address.slice(-4)}` : 'Connected'} (Disconnect)
             </button>
-          )}
+          </Connected>
         </div>
 
 

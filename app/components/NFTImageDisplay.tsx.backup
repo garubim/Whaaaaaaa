@@ -1,0 +1,138 @@
+
+'use client';
+
+import { useState, useEffect } from 'react';
+
+const MFER_IMAGE_CID = 'bafybeiaevaflz35fjr4qhrrcaejbxqiie5v3itvgqmabtstwbpfe7vlodq';
+const PINATA_GATEWAY = 'https://orange-eager-slug-339.mypinata.cloud/ipfs';
+
+interface NFTImageProps {
+  metadata?: {
+    name: string;
+    description: string;
+    attributes?: Array<{
+      trait_type: string;
+      value: string;
+    }>;
+  };
+}
+
+export default function NFTImageDisplay({ metadata }: NFTImageProps) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [imageUrl] = useState(`${PINATA_GATEWAY}/${MFER_IMAGE_CID}`);
+
+  useEffect(() => {
+    const preloadImage = () => {
+      const img = new Image();
+      img.onload = () => setIsLoading(false);
+      img.onerror = () => {
+        setError('Failed to load image');
+        setIsLoading(false);
+      };
+      img.src = imageUrl;
+    };
+
+    preloadImage();
+  }, [imageUrl]);
+
+  if (error) {
+    return (
+      <div style={styles.errorContainer}>
+        <p>{error}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div style={styles.container}>
+      <img
+        src={imageUrl}
+        alt={metadata.name}
+        style={styles.image}
+      />
+      {metadata && (
+        <div style={styles.metadata}>
+          <h3>{metadata.name}</h3>
+          <p>{metadata.description}</p>
+          {metadata.attributes && metadata.attributes.length > 0 && (
+            <div style={styles.attributes}>
+              {metadata.attributes.map((attr) => (
+                <div key={attr.trait_type} style={styles.attribute}>
+                  <span style={styles.traitType}>{attr.trait_type}</span>
+                  <span style={styles.traitValue}>{attr.value}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    alignItems: 'center' as const,
+    gap: '1.5rem',
+    padding: '2.5rem',
+    background: 'rgba(255,255,255,0.10)',
+    borderRadius: '20px',
+    maxWidth: '520px',
+    minWidth: '340px',
+    margin: '0 auto',
+    boxShadow: '0 0 32px 0 #00c6fb30',
+  },
+  image: {
+    width: '100%',
+    maxWidth: '420px',
+    minWidth: '320px',
+    minHeight: '320px',
+    aspectRatio: '1',
+    borderRadius: '16px',
+    marginBottom: '1.5rem',
+    boxShadow: '0 0 32px 0 #00c6fb40',
+    objectFit: 'cover' as const,
+  },
+  spinner: {
+    position: 'absolute' as const,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  },
+  spinnerInner: {
+    width: '40px',
+    height: '40px',
+    border: '4px solid rgba(255, 255, 255, 0.2)',
+    borderTopColor: 'white',
+    borderRadius: '50%',
+    animation: 'spin 1s linear infinite',
+  },
+  metadata: {
+    color: 'white',
+  },
+  attributesSection: {
+    marginTop: '1rem',
+    width: '100%',
+  },
+  attributeRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    background: 'rgba(0,0,0,0.13)',
+    borderRadius: '6px',
+    padding: '0.4rem 0.7rem',
+    marginBottom: '0.4rem',
+    color: '#fff',
+    fontSize: '0.95rem',
+  },
+  traitType: {
+    fontWeight: 600,
+    opacity: 0.8,
+  },
+  traitValue: {
+    color: '#00ffff',
+    fontWeight: 600,
+  },
+};
