@@ -24,7 +24,6 @@ export default function MintComponent() {
   const { address, isConnected } = useAccount();
   const chainId = useChainId();
   const { switchChain } = useSwitchChain();
-  const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
