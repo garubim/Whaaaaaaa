@@ -23,7 +23,9 @@ export default function MintComponent() {
   const { address, isConnected } = useAccount();
   const chainId = useChainId();
   const { switchChain } = useSwitchChain();
-  const { connect, connectors, isLoading: isConnecting } = useConnect();
+  const { connect, connectors } = useConnect();
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { disconnect } = useDisconnect();
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -44,6 +46,14 @@ export default function MintComponent() {
       setError(null);
     }
   }, [writeError, isConfirmed, hash]);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isConnected) setIsConnecting(false);
+  }, [isConnected]);
 
   const handleMint = () => {
     if (!isConnected) {
@@ -88,7 +98,7 @@ export default function MintComponent() {
         <div style={{ width: '100%', margin: '1.2rem 0 0.5rem 0', display: 'flex', justifyContent: 'center' }}>
           {!isConnected ? (
             <button
-              onClick={() => connect()}
+              onClick={() => { setIsConnecting(true); connect(); }}
               disabled={isConnecting}
               style={{
                 ...styles.button,
@@ -139,13 +149,17 @@ export default function MintComponent() {
               onClick={() => {
                 setError(null);
                 if (!isConnected) {
+                  setIsConnecting(true);
                   if (connectors[0]) connect({ connector: connectors[0] });
-                  else setError('Nenhum conector disponível.');
+                  else {
+                    setError('Nenhum conector disponível.');
+                    setIsConnecting(false);
+                  }
                   return;
                 }
                 handleMint();
               }}
-              disabled={isMinting || isConfirming}
+              disabled={isMinting || isConfirming || isConnecting}
               style={{
                 ...styles.button,
                 fontSize: '1.1rem',
@@ -160,14 +174,15 @@ export default function MintComponent() {
                 ...(isMinting || isConfirming ? styles.buttonDisabled : {}),
               }}
             >
-              {!isConnected && (isConnecting ? 'Connecting...' : 'Connect Wallet')}
-              {isConnected && isMinting && 'Waiting for Impact...'}
-              {isConnected && isConfirming && 'Minting...'}
-              {isConnected && !isMinting && !isConfirming && 'Mint Next Level NFT'}
+              {!mounted && 'Connect Wallet'}
+              {mounted && !isConnected && (isConnecting ? 'Connecting...' : 'Connect Wallet')}
+              {mounted && isConnected && isMinting && 'Waiting for Impact...'}
+              {mounted && isConnected && isConfirming && 'Minting...'}
+              {mounted && isConnected && !isMinting && !isConfirming && 'Mint Next Level NFT'}
             </button>
             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
               <div style={{ color: '#ccc', fontSize: '0.85rem' }}>
-                {isConnected ? `Connected — chainId: ${chainId ?? 'unknown'}` : 'Not connected'}
+                {mounted ? (isConnected ? `Connected — chainId: ${chainId ?? 'unknown'}` : 'Not connected') : ''}
               </div>
               {isConnected && (
                 <button
@@ -217,7 +232,7 @@ export default function MintComponent() {
 
       </div>
 
-      <style jsx>{`'main'
+      <style jsx>{`
         code {
           font-family: 'Inter';
           font-size: 0.85rem;
