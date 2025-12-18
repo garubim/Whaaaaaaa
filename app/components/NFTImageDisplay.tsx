@@ -14,9 +14,10 @@ interface NFTImageProps {
       value: string;
     }>;
   };
+  showAttributes?: boolean;
 }
 
-export default function NFTImageDisplay({ metadata }: NFTImageProps) {
+export default function NFTImageDisplay({ metadata, showAttributes = false }: NFTImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [imageUrl] = useState(`${PINATA_GATEWAY}/${MFER_IMAGE_CID}`);
@@ -61,9 +62,23 @@ export default function NFTImageDisplay({ metadata }: NFTImageProps) {
       />
       {metadata && (
         <div style={styles.metadata}>
-          <h3>{metadata.name}</h3>
-          <p>{metadata.description}</p>
-          {metadata.attributes && metadata.attributes.length > 0 && (
+          <h3 style={styles.title}>{metadata.name}</h3>
+          <p style={styles.description} dangerouslySetInnerHTML={{ __html: metadata.description }}></p>
+          <div style={styles.videoButtons}>
+            <button
+              onClick={() => window.open(imageUrl, '_blank')}
+              style={styles.videoButton}
+            >
+              Open IPFS (new tab)
+            </button>
+            <button
+              onClick={() => window.open(imageUrl, '_blank', 'width=1080,height=1080')}
+              style={styles.videoButton}
+            >
+              Open 1080×1080 popup
+            </button>
+          </div>
+          {showAttributes && metadata?.attributes && metadata.attributes.length > 0 && (
             <div style={styles.attributes}>
               {metadata.attributes.map((attr) => (
                 <div key={attr.trait_type} style={styles.attribute}>
@@ -121,6 +136,36 @@ const styles = {
   },
   metadata: {
     color: 'white',
+    textAlign: 'center' as const,
+    display: 'flex' as const,
+    flexDirection: 'column' as const,
+    alignItems: 'center' as const,
+  },
+  title: {
+    margin: 0,
+    fontSize: '1.25rem',
+    textAlign: 'center' as const,
+    fontWeight: 700 as const,
+  },
+  description: {
+    margin: '0.25rem 0 0',
+    textAlign: 'center' as const,
+    opacity: 0.95,
+  },
+  videoButtons: {
+    display: 'flex' as const,
+    gap: '0.5rem',
+    justifyContent: 'center',
+    marginTop: '0.75rem',
+  },
+  videoButton: {
+    padding: '0.45rem 0.75rem',
+    borderRadius: '8px',
+    border: 'none',
+    background: 'rgba(255,255,255,0.08)',
+    color: 'white',
+    cursor: 'pointer' as const,
+    fontSize: '0.85rem',
   },
   attributes: {
     display: 'grid' as const,
