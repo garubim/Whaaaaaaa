@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import NFTImageDisplay from './NFTImageDisplay';
 
 function ConnectButtonArea() {
-  const { connect, connectors, isLoading } = useConnect();
+  const { connect, connectors } = useConnect();
   const connector = connectors && connectors.length > 0 ? connectors[0] : undefined;
 
   return (
@@ -24,7 +24,7 @@ function ConnectButtonArea() {
         padding: '0.7rem 1rem',
       }}
     >
-      {isLoading ? 'Connecting…' : 'Connect Wallet'}
+      Connect Wallet
     </button>
   );
 }
