@@ -84,6 +84,43 @@ export default function MintComponent() {
     <div style={styles.container}>
       <div style={styles.verticalContent}>
 
+        {/* Botão Connect Wallet */}
+        <div style={{ width: '100%', margin: '1.2rem 0 0.5rem 0', display: 'flex', justifyContent: 'center' }}>
+          {!isConnected ? (
+            <button
+              onClick={() => connect()}
+              disabled={isConnecting}
+              style={{
+                ...styles.button,
+                fontSize: '1.1rem',
+                borderRadius: '10px',
+                width: '95%',
+                background: 'linear-gradient(90deg, #ffb347 0%, #ffcc33 100%)',
+                color: '#222',
+                margin: '0 auto',
+                ...((isConnecting) ? styles.buttonDisabled : {}),
+              }}
+            >
+              {isConnecting ? 'Connecting...' : 'Connect Wallet'}
+            </button>
+          ) : (
+            <button
+              onClick={() => disconnect()}
+              style={{
+                ...styles.button,
+                fontSize: '1.1rem',
+                borderRadius: '10px',
+                width: '95%',
+                background: 'linear-gradient(90deg, #00c6fb 0%, #005bea 100%)',
+                color: '#fff',
+                margin: '0 auto',
+              }}
+            >
+              {address ? `Connected: ${address.slice(0, 6)}...${address.slice(-4)}` : 'Connected'} (Disconnect)
+            </button>
+          )}
+        </div>
+
 
         <div style={styles.imageSection}>
           <NFTImageDisplay metadata={nftMetadata} />
@@ -149,7 +186,7 @@ export default function MintComponent() {
         {successMessage && <p style={styles.success}>✅ {successMessage}</p>}
 
         {/* Detalhes integrados: Collection, Chain, Address, Price, Wallet, The soul spins at */}
-        <div style={{ ...styles.contractInfo, marginTop: '0.5rem' }}>
+        <div style={{ ...styles.contractInfo, marginTop: '0.0rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <span style={{ fontWeight: 600 }}>Collection</span>
             <span style={{ color: '#00e6ff', fontWeight: 600 }}>Mfer-0-base</span>
@@ -180,9 +217,9 @@ export default function MintComponent() {
 
       </div>
 
-      <style jsx>{`
+      <style jsx>{`'main'
         code {
-          font-family: 'Courier New', monospace;
+          font-family: 'Inter';
           font-size: 0.85rem;
           word-break: break-all;
         }
@@ -203,13 +240,13 @@ const styles = {
   container: {
     width: '100%',
     maxWidth: '1200px',
-    padding: '2rem',
+    padding: '0.0rem',
   },
   verticalContent: {
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'center' as const,
-    gap: '2rem',
+    gap: '0rem',
     width: '100%',
     maxWidth: '500px',
     margin: '0 auto',
@@ -235,7 +272,7 @@ const styles = {
     padding: '0.5rem',
     borderRadius: '4px',
     display: 'block',
-    marginTop: '0.5rem',
+    marginTop: '0.1rem',
     wordBreak: 'break-all' as const,
   },
   price: {

@@ -2,11 +2,21 @@
 
 
 "use client";
+
 import MintComponent from "@/components/MintComponent";
 import styles from "./page.module.css";
+import { useEffect } from "react";
+import { sdk } from "@farcaster/miniapp-sdk";
+
 
 
 export default function Home() {
+  useEffect(() => {
+    (async () => {
+      await sdk.actions.ready();
+    })();
+  }, []);
+
   return (
     <main className={styles.main}>
       <div className={styles.header}>
