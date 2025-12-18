@@ -35,6 +35,11 @@ export default function Home() {
         <a href="https://onchainkit.com" target="_blank" rel="noopener noreferrer">
           Powered by OnchainKit
         </a>
+        {' '}
+        | {' '}
+        <a href="/manifesto-farcaster.md" target="_self" rel="noopener noreferrer">
+          Manifesto
+        </a>
       </div>
     </main>
   );
