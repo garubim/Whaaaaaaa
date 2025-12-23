@@ -28,12 +28,16 @@ contract MferMint is ERC721, Ownable, ReentrancyGuard {
     address payable public payee1;
     address payable public payee2;
 
+    // pending withdrawals (pull payments) for ETH credits
+    mapping(address => uint256) public pendingWithdrawals;
+
     mapping(string => bool) public processedPayment;
 
     event RelayerSet(address indexed relayer);
     event GallerySet(address indexed gallery);
     event PriceUSDCSet(uint256 price);
     event MintedFor(address indexed to, uint256 tokenId, string paymentId);
+    event WithdrawnETH(address indexed to, uint256 amount);
 
     modifier onlyRelayer() {
         require(msg.sender == relayer, "Only relayer");
@@ -43,6 +47,8 @@ contract MferMint is ERC721, Ownable, ReentrancyGuard {
     constructor(address _usdc, uint256 _priceUSDC) ERC721("Mfer", "MFER") Ownable(msg.sender) {
         usdc = IERC20(_usdc);
         priceUSDC = _priceUSDC;
+        // sanity: ensure split matches the total mint price
+        assert(PAYEE1_AMOUNT + PAYEE2_AMOUNT == MINT_PRICE);
     }
 
     function setPayees(address _p1, address _p2) external onlyOwner {
@@ -78,9 +84,9 @@ contract MferMint is ERC721, Ownable, ReentrancyGuard {
         uint256 id = _nextId++;
         _safeMint(msg.sender, id);
 
-        // split and forward funds
-        payee1.sendValue(PAYEE1_AMOUNT);
-        payee2.sendValue(PAYEE2_AMOUNT);
+        // split and credit funds to payees (pull payments)
+        pendingWithdrawals[payee1] += PAYEE1_AMOUNT;
+        pendingWithdrawals[payee2] += PAYEE2_AMOUNT;
     }
 
     // Called by the relayer after it detects a successful Base Pay payment to this contract.
@@ -115,9 +121,9 @@ contract MferMint is ERC721, Ownable, ReentrancyGuard {
         uint256 id = _nextId++;
         _safeMint(to, id);
 
-        // split and forward funds
-        payee1.sendValue(PAYEE1_AMOUNT);
-        payee2.sendValue(PAYEE2_AMOUNT);
+        // split and credit funds to payees (pull payments)
+        pendingWithdrawals[payee1] += PAYEE1_AMOUNT;
+        pendingWithdrawals[payee2] += PAYEE2_AMOUNT;
 
         emit MintedFor(to, id, paymentId);
     }
@@ -135,8 +141,8 @@ contract MferMint is ERC721, Ownable, ReentrancyGuard {
         uint256 id = _nextId++;
         _safeMint(to, id);
 
-        // forward the received artist share to payee1
-        payee1.sendValue(msg.value);
+        // credit the received artist share to payee1 (pull payment)
+        pendingWithdrawals[payee1] += msg.value;
 
         emit MintedFor(to, id, paymentId);
     }
@@ -146,5 +152,14 @@ contract MferMint is ERC721, Ownable, ReentrancyGuard {
         require(to != address(0), "invalid to");
         require(usdc.balanceOf(address(this)) >= amount, "Insufficient USDC");
         usdc.safeTransfer(to, amount);
+    }
+
+    // Pull-based withdrawal for ETH credits
+    function withdrawPending() external nonReentrant {
+        uint256 amt = pendingWithdrawals[msg.sender];
+        require(amt > 0, "no funds");
+        pendingWithdrawals[msg.sender] = 0;
+        payable(msg.sender).sendValue(amt);
+        emit WithdrawnETH(msg.sender, amt);
     }
 }

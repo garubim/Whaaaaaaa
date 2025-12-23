@@ -16,6 +16,9 @@ contract Gallery is Ownable, ReentrancyGuard {
     using SafeERC20 for IERC20;
     using Address for address payable;
 
+    // pending withdrawals (pull payments) for ETH credits (artist or other recipients)
+    mapping(address => uint256) public pendingWithdrawals;
+
     IERC20 public immutable usdc;
     address public relayer;
     address public feeRecipient;
@@ -27,6 +30,7 @@ contract Gallery is Ownable, ReentrancyGuard {
     event FeeUpdated(address indexed recipient, uint256 bps);
     event Processed(address indexed artistContract, address indexed to, uint256 amount, string paymentId);
     event WithdrawnUSDC(address indexed to, uint256 amount);
+    event WithdrawnETH(address indexed to, uint256 amount);
 
     // Fixed mint price in wei (0.0003 ETH)
     uint256 public constant MINT_PRICE = 300000000000000; // 0.0003 ether
@@ -93,12 +97,17 @@ contract Gallery is Ownable, ReentrancyGuard {
     function payAndMint(address artistContract, address to, string calldata paymentId) external payable nonReentrant {
         require(msg.value == MINT_PRICE, "Price mismatch");
 
-        // forward artist share to artist contract and trigger mint
-        // the artist contract will mark the paymentId as processed
-        (bool ok, ) = payable(artistContract).call{value: PAYEE1_AMOUNT}(abi.encodeWithSignature("mintForWithEthFromGallery(address,string)", to, paymentId));
-        require(ok, "Artist mint failed");
+        // Try to forward artist share to artist contract and trigger mint.
+        // If the external call fails, credit the artist contract in `pendingWithdrawals`
+        // so funds can be pulled instead of blocking the whole flow.
+        try IMferMint(artistContract).mintForWithEthFromGallery{value: PAYEE1_AMOUNT}(to, paymentId) {
+            // success
+        } catch {
+            // credit artistContract so it can withdraw later
+            pendingWithdrawals[artistContract] += PAYEE1_AMOUNT;
+        }
 
-        // Gallery retains PAYEE2_AMOUNT in contract balance
+        // Gallery retains PAYEE2_AMOUNT in contract balance (or can be withdrawn by owner)
         emit Processed(artistContract, to, msg.value, paymentId);
     }
 
@@ -108,5 +117,14 @@ contract Gallery is Ownable, ReentrancyGuard {
         require(usdc.balanceOf(address(this)) >= amount, "Insufficient USDC");
         usdc.safeTransfer(to, amount);
         emit WithdrawnUSDC(to, amount);
+    }
+
+    // Pull-based withdrawal for ETH credits
+    function withdrawPending() external nonReentrant {
+        uint256 amt = pendingWithdrawals[msg.sender];
+        require(amt > 0, "no funds");
+        pendingWithdrawals[msg.sender] = 0;
+        payable(msg.sender).sendValue(amt);
+        emit WithdrawnETH(msg.sender, amt);
     }
 }
