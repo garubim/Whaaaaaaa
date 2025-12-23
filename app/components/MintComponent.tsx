@@ -93,8 +93,8 @@ export default function MintComponent() {
   };
 
   const nftMetadata = {
-    name: 'Mfer',
-    description: 'This is not animation; it\'s a <strong>ritual</strong>',
+    name: 'Mfer 1',
+    description: 'Whaaa?! Mfer-0-base - Exclusive NFT Collection on Base',
     attributes: [
       { trait_type: 'Collection', value: 'Mfer-0-base' },
       { trait_type: 'Chain', value: 'Base' },
@@ -106,7 +106,7 @@ export default function MintComponent() {
     <div style={styles.container}>
       <div style={styles.verticalContent}>
 
-        <div style={{ width: '100%', margin: '0.6rem 0 0.25rem 0', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ width: '100%', margin: '1.2rem 0 0.5rem 0', display: 'flex', justifyContent: 'center' }}>
           {/* Simple connect / disconnect UI for clarity during hotfix */}
           {!isConnected ? (
             <ConnectButtonArea />
@@ -137,7 +137,7 @@ export default function MintComponent() {
         </div>
 
         {/* Botão Mint destacado, logo abaixo da imagem */}
-        <div style={{ width: '100%', margin: '0.6rem 0 0.6rem 0', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ width: '100%', margin: '1.2rem 0 1.2rem 0', display: 'flex', justifyContent: 'center' }}>
           <button
             onClick={handleMint}
             disabled={!isConnected || isMinting || isConfirming}
@@ -230,7 +230,7 @@ const styles = {
     alignItems: 'center' as const,
     gap: '0rem',
     width: '100%',
-    maxWidth: '640px',
+    maxWidth: '500px',
     margin: '0 auto',
   },
   imageSection: {
