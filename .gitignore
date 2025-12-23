@@ -47,3 +47,9 @@ ANALISE_PROFUNDA_ESTRUTURA.md
 # Env files
 .env.local
 .env
+
+# ignore env files
+.env
+.env.*
+.env.local
+.env.local.bak
