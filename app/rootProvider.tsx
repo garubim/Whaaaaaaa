@@ -3,14 +3,22 @@
 import { OnchainKitProvider } from '@coinbase/onchainkit';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
-import { base } from 'viem/chains';
+import { base, sepolia } from 'viem/chains';
 import { createConfig, http } from 'wagmi';
 
+const baseRpc = process.env.NEXT_PUBLIC_BASE_RPC || process.env.NEXT_PUBLIC_BASE_MAIN_RPC || '';
+const sepoliaRpc = process.env.NEXT_PUBLIC_BASE_SEPOLIA_RPC || process.env.NEXT_PUBLIC_SEPOLIA_RPC || '';
+
+const chains = sepoliaRpc ? ([base, sepolia] as const) : ([base] as const);
+
+const transports: Record<number, any> = {};
+if (baseRpc) transports[base.id] = http(baseRpc);
+else transports[base.id] = http();
+if (sepoliaRpc) transports[sepolia.id] = http(sepoliaRpc);
+
 const config = createConfig({
-  chains: [base],
-  transports: {
-    [base.id]: http(),
-  },
+  chains,
+  transports,
 });
 
 const queryClient = new QueryClient();

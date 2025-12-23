@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { APP_SCALE } from '../config/baseConfig';
 
 const MFER_IMAGE_CID = 'bafybeiaevaflz35fjr4qhrrcaejbxqiie5v3itvgqmabtstwbpfe7vlodq';
 const PINATA_GATEWAY = 'https://orange-eager-slug-339.mypinata.cloud/ipfs';
@@ -9,6 +10,7 @@ interface NFTImageProps {
   metadata?: {
     name: string;
     description: string;
+    image?: string;
     attributes?: Array<{
       trait_type: string;
       value: string;
@@ -20,7 +22,8 @@ interface NFTImageProps {
 export default function NFTImageDisplay({ metadata, showAttributes = false }: NFTImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [imageUrl] = useState(`${PINATA_GATEWAY}/${MFER_IMAGE_CID}`);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const imageUrl = metadata?.image || `${PINATA_GATEWAY}/${MFER_IMAGE_CID}`;
 
   if (error) {
     return (
@@ -30,8 +33,25 @@ export default function NFTImageDisplay({ metadata, showAttributes = false }: NF
     );
   }
 
+  const handleFullscreen = async () => {
+    try {
+      if (!containerRef.current) return;
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+      } else {
+        await containerRef.current.requestFullscreen();
+      }
+    } catch (e) {
+      console.warn('Fullscreen failed', e);
+    }
+  };
+
+  const openFullRes = () => {
+    window.open(imageUrl, '_blank');
+  };
+
   return (
-    <div style={styles.container}>
+    <div ref={containerRef} style={styles.container}>
       <img
         src={imageUrl}
         alt={metadata?.name || 'NFT'}
@@ -47,18 +67,10 @@ export default function NFTImageDisplay({ metadata, showAttributes = false }: NF
           <h3 style={styles.title}>{metadata.name}</h3>
           <p style={styles.description} dangerouslySetInnerHTML={{ __html: metadata.description }}></p>
           <div style={styles.videoButtons}>
-            <button
-              onClick={() => window.open(imageUrl, '_blank')}
-              style={styles.videoButton}
-            >
-              Open IPFS (new tab)
-            </button>
-            <button
-              onClick={() => window.open(imageUrl, '_blank', 'width=1080,height=1080')}
-              style={styles.videoButton}
-            >
-              Open 1080×1080 popup
-            </button>
+            <div style={styles.controlOverlay}>
+              <button onClick={handleFullscreen} style={styles.videoButton} title="Fullscreen">⛶</button>
+              <button onClick={openFullRes} style={styles.videoButton} title="Open full resolution">Open Full‑Res</button>
+            </div>
           </div>
           {showAttributes && metadata?.attributes && metadata.attributes.length > 0 && (
             <div style={styles.attributes}>
@@ -76,27 +88,41 @@ export default function NFTImageDisplay({ metadata, showAttributes = false }: NF
   );
 }
 
+const S = typeof APP_SCALE === 'number' ? APP_SCALE : 1;
+
 const styles = {
   container: {
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'center' as const,
-    gap: '0.75rem',
-    padding: '1.25rem',
+    position: 'relative' as const,
+    gap: `${0.75 * S}rem`,
+    padding: `${1.25 * S}rem`,
     background: 'rgba(255,255,255,0.10)',
-    borderRadius: '20px',
-    maxWidth: '680px',
-    minWidth: '640px',
+    borderRadius: `${20 * S}px`,
+    maxWidth: `${680 * S}px`,
+    minWidth: `${640 * S}px`,
     margin: '0 auto',
+  },
+  controlOverlay: {
+    position: 'absolute' as const,
+    right: `${1 * S}rem`,
+    top: `${1 * S}rem`,
+    display: 'flex' as const,
+    gap: `${0.5 * S}rem`,
+    zIndex: 40,
+    background: 'rgba(0,0,0,0.25)',
+    padding: `${0.35 * S}rem`,
+    borderRadius: `${8 * S}px`,
   },
   image: {
     width: '100%',
-    maxWidth: '640px',
-    minWidth: '640px',
-    minHeight: '640px',
+    maxWidth: `${640 * S}px`,
+    minWidth: `${640 * S}px`,
+    minHeight: `${640 * S}px`,
     aspectRatio: '1',
-    borderRadius: '16px',
-    marginBottom: '0.75rem',
+    borderRadius: `${16 * S}px`,
+    marginBottom: `${0.75 * S}rem`,
     objectFit: 'cover' as const,
     background: '#222',
   },
@@ -114,42 +140,42 @@ const styles = {
   },
   title: {
     margin: 0,
-    fontSize: '1.25rem',
+    fontSize: `${1.25 * S}rem`,
     textAlign: 'center' as const,
     fontWeight: 700 as const,
   },
   description: {
-    margin: '0.25rem 0 0',
+    margin: `${0.25 * S}rem 0 0`,
     textAlign: 'center' as const,
     opacity: 0.95,
   },
   videoButtons: {
     display: 'flex' as const,
-    gap: '0.5rem',
+    gap: `${0.5 * S}rem`,
     justifyContent: 'center',
-    marginTop: '0.75rem',
+    marginTop: `${0.75 * S}rem`,
   },
   videoButton: {
-    padding: '0.45rem 0.75rem',
-    borderRadius: '8px',
+    padding: `${0.45 * S}rem ${0.75 * S}rem`,
+    borderRadius: `${8 * S}px`,
     border: 'none',
     background: 'rgba(255,255,255,0.08)',
     color: 'white',
     cursor: 'pointer' as const,
-    fontSize: '0.85rem',
+    fontSize: `${0.85 * S}rem`,
   },
   attributes: {
     display: 'grid' as const,
-    gap: '0.5rem',
-    marginTop: '1rem',
+    gap: `${0.5 * S}rem`,
+    marginTop: `${1 * S}rem`,
     width: '100%',
   },
   attribute: {
     display: 'flex' as const,
     justifyContent: 'space-between',
     background: 'rgba(0,0,0,0.13)',
-    borderRadius: '6px',
-    padding: '0.4rem 0.7rem',
+    borderRadius: `${6 * S}px`,
+    padding: `${0.4 * S}rem ${0.7 * S}rem`,
   },
   traitType: {
     fontWeight: 600,
