@@ -1,0 +1,53 @@
+Last login: Fri Dec 19 11:52:16 on ttys031
+gabrielrubim@MacBook-Air-de-Gabriel ~ % cd /Users/gabrielrubim/dev/GitHub/whaaaaa
+USDC_ADDRESS=0x0000000000000000000000000000000000000000 \
+ARTIST_ADDRESS=0x0000000000000000000000000000000000000001 \
+AGENT_ADDRESS=0x0000000000000000000000000000000000000002 \
+npx hardhat run scripts/deploy.cjs --network hardhat > deploy.log 2>&1
+tail -f deploy.log
+An unexpected error occurred:
+
+Error [ERR_REQUIRE_ESM]: require() of ES Module /Users/gabrielrubim/dev/GitHub/whaaaaa/node_modules/hardhat/dist/src/index.js from /Users/gabrielrubim/dev/GitHub/whaaaaa/scripts/deploy.cjs not supported.
+Instead change the require of index.js in /Users/gabrielrubim/dev/GitHub/whaaaaa/scripts/deploy.cjs to a dynamic import() which is available in all CommonJS modules.
+    at TracingChannel.traceSync (node:diagnostics_channel:315:14)
+    at Object.<anonymous> (/Users/gabrielrubim/dev/GitHub/whaaaaa/scripts/deploy.cjs:1:17) {
+  code: 'ERR_REQUIRE_ESM'
+}
+
+If you think this is a bug in Hardhat, please report it here: https://hardhat.org/report-bug
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
